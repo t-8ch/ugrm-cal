@@ -7,7 +7,7 @@ meeting_length = timedelta(minutes=MEETING_LENGTH)
 
 
 def build_calendar(groups, exclude=None):
-    exclude = set(exclude)
+    exclude = set(exclude or [])
 
     cal = Calendar()
     cal.add('prodid', PRODID)

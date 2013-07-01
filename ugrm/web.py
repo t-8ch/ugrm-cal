@@ -52,7 +52,7 @@ def calendar():
         groups = []
         for tag in tags:
             group = all_groups_map.get(tag, None)
-            if group is None:
+            if group is None or group.schedule is None:
                 # TODO better error reporting
                 return abort(404)
             groups.append(group)

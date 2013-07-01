@@ -28,7 +28,7 @@ class XmlLoader(object):
 
         default_location = None
         if _defaultmeetinglocation is not None:
-            default_location = _defaultmeetinglocation.text
+            default_location = self._extract_location(_defaultmeetinglocation.text)
 
         schedule = None
 
@@ -56,6 +56,7 @@ class XmlLoader(object):
                         url = _url
 
                     location = self._extract_location(meeting.find('location'))
+                    location = location or default_location
                     meetings.append(Meeting(name=name, time=time,
                                             description=description,
                                             url=url, location=location))

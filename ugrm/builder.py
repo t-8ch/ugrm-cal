@@ -28,7 +28,7 @@ def build_calendar(groups, exclude=None):
                 event.add('dtend', start + meeting_length)
                 event.add('dtstamp', now)
                 if meeting.location is not None:
-                    event.add('location', str(meeting.location))
+                    event.add('location', unicode(meeting.location))
                 if meeting.url is not None:
                     event.add('url', meeting.url)
                 if meeting.description is not None:

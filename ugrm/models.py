@@ -53,7 +53,13 @@ class Location(object):
                 self.name, self.street, self.zipcode, self.city, self.url)
 
     def __str__(self):
-        return "foO"
+        if self.url is None:
+            return u'{}, {}, {} {}'.format(self.name, self.street,
+                                           self.zipcode, self.city)
+        else:
+            return u'{} ({}), {}, {} {}'.format(self.name, self.url,
+                                                self.street, self.zipcode,
+                                                self.city)
 
 
 class Schedule(object):

@@ -12,6 +12,9 @@ class XmlLoader(object):
 
     def __init__(self, datadir):
         self.datadir = path(datadir)
+        if not self.datadir.isdir():
+            raise ValueError(
+                'Invalid datadir specified "{}"'.format(str(self.datadir)))
 
     def list_groups(self):
         for f in self.datadir.glob('*.xml'):

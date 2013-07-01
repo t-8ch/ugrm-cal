@@ -1,0 +1,3 @@
+[submodule "ugrm/data"]
+	path = ugrm/data
+	url = https://github.com/tacker/ugrm-data

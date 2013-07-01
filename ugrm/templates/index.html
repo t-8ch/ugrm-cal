@@ -1,0 +1,12 @@
+<!doctype html>
+<head>
+    <title>UGRM Calendar</title>
+</head>
+<body>
+    <h1><a href="{{calendar_url}}">Alle Termine ({{calendar_url}})</a></h1>
+    <ul>
+        {% for group in groups %}
+        <li><i>{{ group.tag }}</i>: {{ group.name }}</li>
+        {% endfor %}
+    </ul>
+</body>

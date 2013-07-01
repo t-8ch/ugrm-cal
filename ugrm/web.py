@@ -62,7 +62,3 @@ def calendar():
     exclude = request.args.get('exclude', '').split(',')
 
     return build_calendar_response(all_groups, exclude=exclude)
-
-
-if __name__ == '__main__':
-    app.run(debug=True)

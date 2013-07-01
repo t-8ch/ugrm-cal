@@ -75,7 +75,7 @@ class XmlLoader(object):
         url = None
         _url = root.find('url')
         if _url is not None:
-            url = _url
+            url = _url.text
         street = root.find('street').text
         zipcode = root.find('zip').text
         city = root.find('city').text

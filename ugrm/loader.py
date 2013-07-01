@@ -28,7 +28,7 @@ class XmlLoader(object):
 
         default_location = None
         if _defaultmeetinglocation is not None:
-            default_location = self._extract_location(_defaultmeetinglocation.text)
+            default_location = self._extract_location(_defaultmeetinglocation)
 
         schedule = None
 

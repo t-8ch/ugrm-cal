@@ -4,6 +4,9 @@ from flask import (Flask, abort, Response, redirect, request, render_template,
 from config import DATADIR
 from loader import XmlLoader
 from builder import build_calendar
+import logging
+
+logging.basicConfig(level=logging.DEBUG)
 
 app = Flask('ugrm')
 

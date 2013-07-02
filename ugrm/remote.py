@@ -45,6 +45,11 @@ class RemoteCalendarFetcher(object):
         # doing a full roundtrip here for convenience and to enforce utc
         for c in rcal.walk():
             if c.name == 'VEVENT':
+
+                # don't support recurring for now, timezone issues
+                if c.get('rrule'):
+                    continue
+
                 name = unicode(c.get('summary'))
                 description = c.get('description', None)
                 if description is not None:

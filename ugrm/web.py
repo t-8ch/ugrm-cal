@@ -47,6 +47,7 @@ def calendar_for_tag(tag):
 
 
 @app.route('/calendar')
+@app.route('/calendar/')
 def calendar():
     only = request.args.get('only', None)
     if only is not None:

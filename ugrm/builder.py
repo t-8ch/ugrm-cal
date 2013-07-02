@@ -1,5 +1,5 @@
 from icalendar import Calendar, Event
-from config import PRODID, MEETING_LENGTH
+from config import PRODID, MEETING_LENGTH, CAL_NAME, CAL_DESC
 from datetime import datetime, timedelta, time
 from hashlib import sha1
 
@@ -12,6 +12,9 @@ def build_calendar(groups, exclude=None):
     cal = Calendar()
     cal.add('prodid', PRODID)
     cal.add('version', '2.0')
+    cal.add('x-wr-calname', CAL_NAME)
+    desc = CAL_DESC + ' (' + ', '.join(map(lambda x: x.tag, groups)) + ')'
+    cal.add('x-wr-caldesc', desc)
 
     events = []
 

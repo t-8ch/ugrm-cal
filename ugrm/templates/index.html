@@ -44,10 +44,10 @@
                     {{ url_for('calendar_for_tag', tag='pyugrm', _external=True) }}</div></li>
 
             <li><div>Feed for multiple usergroups:<br>
-                    {{ url_for('calendar', _external=True) +  '?only=pyugrm,cccmz' }}</div></li>
+                    {{ url_for('calendar', _external=True) + '?only=pyugrm,cccffm' }}</div></li>
 
             <li><div>Feed for all <i>except</i> some usergroups:<br>
-                    {{ url_for('calendar', _external=True) + '?except=pyugrm,cccmz' }}</div></li>
+                    {{ url_for('calendar', _external=True) + '?except=pyugrm,cccffm' }}</div></li>
         </ol>
 
         <h3>Possible tags</h3>

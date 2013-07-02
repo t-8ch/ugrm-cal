@@ -1,12 +1,67 @@
 <!doctype html>
 <head>
     <title>UGRM Calendar</title>
+    <style type="text/css">
+        body {
+            text-align: center;
+            padding-top: 3ex;
+        }
+        div#wrapper {
+            width: 30em;
+            margin: auto;
+            text-align: center;
+        }
+        img#github_banner {
+            position: absolute;
+            top: 0;
+            right: 0;
+            border: 0;
+        }
+        dl {
+            text-align: left;
+        }
+        dt {
+            padding-top: 1ex;
+        }
+        li {
+            padding-top: 2ex;
+        }
+        h2,h3 {
+            padding-top: 3ex;
+        }
+    </style>
 </head>
 <body>
-    <h1><a href="{{calendar_url}}">Alle Termine ({{calendar_url}})</a></h1>
-    <ul>
-        {% for group in groups %}
-        <li><i>{{ group.tag }}</i>: {{ group.name }}</li>
-        {% endfor %}
-    </ul>
+
+    <h1>ICal feed for <a href="http://usergroups.rheinmainrocks.de/">Usergroups RheinMain</a></h1>
+    <div id="wrapper">
+        <h2>Ways to use this</h2>
+        <ol>
+            <li><div>Feed for all events:<br>
+                    <a href="{{ url_for('calendar', _external=True) }}">{{ url_for('calendar', _external=True) }}</a></div></li>
+
+            <li><div>Feed for a single usergroup:<br>
+                    {{ url_for('calendar_for_tag', tag='tag', _external=True) }}</div></li>
+
+            <li><div>Feed for multiple usergroups:<br>
+                    {{ url_for('calendar', _external=True) +  '?only=pyugrm,cccmz' }}</div></li>
+
+            <li><div>Feed for all <i>except</i> some usergroups:<br>
+                    {{ url_for('calendar', _external=True) + '?except=pyugrm,cccmz' }}</div></li>
+        </ol>
+
+        <h3>Possible tags</h3>
+        <div id="all_groups">
+            <dl>
+                {% for group in groups %}
+                <dt><i>{{ group.tag }}</i>:</dt><dd>{{ group.name.strip() }}</dd>
+                {% endfor %}
+            </dl>
+        </div>
+    </div>
+    <footer>
+        A project by <a href="https://github.com/t-8ch/">Thomas Weißschuh</a>
+    </footer>
+    <a href="https://github.com/t-8ch/ugrm-cal">
+        <img src="{{ url_for('static', filename='forkme_right_gray_6d6d6d.png')}}" id="github_banner" alt="Fork me on GitHub" /></a>
 </body>

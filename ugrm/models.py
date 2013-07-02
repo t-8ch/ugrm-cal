@@ -20,22 +20,6 @@ class UserGroup(object):
         return self.__repr__()
 
 
-class Meeting(object):
-    def __init__(self, name, time, description=None, url=None,
-                 location=None):
-        self.name = name
-        self.time = time
-        self.description = description
-        self.url = url
-        self.location = location
-
-    def __repr__(self):
-        return '<Meeting: {} - {} >'.format(self.name, str(self.time))
-
-    def __str__(self):
-        return self.__repr__()
-
-
 class Location(object):
     def __init__(self, name, street, zipcode, city, url=None):
         self.name = name
@@ -78,12 +62,14 @@ class Schedule(object):
 
 class IcalSchedule(Schedule):
     def __init__(self, url):
-        raise NotImplementedError('needs to be done')
         self.url = url
         self.remote_fetcher = RemoteCalendarFetcher(url)
 
     def alternative_url(self):
         return self.url
+
+    def get_data(self):
+        return self.remote_fetcher.get_data()
 
     def __repr__(self):
         return '<IcalSchedule: {} >'.format(self.url)

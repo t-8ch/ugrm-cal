@@ -29,14 +29,14 @@ def index():
                            calendar_url=url_for('calendar'))
 
 
-@app.route('/calendar/:tag')
+@app.route('/calendar/<tag>')
 def calendar_for_tag(tag):
     group = all_groups_map.get(tag, None)
 
     if group is None or group.schedule is None:
         return abort(404)
 
-    alternative_url = group.schedule.alternative_url
+    alternative_url = group.schedule.alternative_url()
     if alternative_url is not None:
         return redirect(alternative_url)
 

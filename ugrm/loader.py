@@ -3,7 +3,8 @@ from path import path
 from dateutil.parser import parse as parsedate
 from pytz import utc
 
-from models import UserGroup, Meeting, Location, StaticSchedule, IcalSchedule
+from meeting import Meeting
+from models import UserGroup, Location, IcalSchedule, StaticSchedule
 
 __all__ = ['XmlLoader']
 
@@ -36,8 +37,7 @@ class XmlLoader(object):
         if _schedule is not None:
             ical_feed = _schedule.find('ical')
             if ical_feed is not None:
-                pass  # not implemented for now
-                # schedule = IcalSchedule(ical_feed.text)
+                schedule = IcalSchedule(ical_feed.text)
             else:
                 meetings = []
                 for meeting in _schedule.findall('meeting'):

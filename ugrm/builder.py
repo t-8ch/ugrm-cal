@@ -1,6 +1,6 @@
 from icalendar import Calendar, Event
 from config import PRODID, MEETING_LENGTH
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, time
 from hashlib import sha1
 
 meeting_length = timedelta(minutes=MEETING_LENGTH)
@@ -25,7 +25,10 @@ def build_calendar(groups, exclude=None):
                 event = Event()
                 event.add('summary', name)
                 event.add('dtstart', start)
-                event.add('dtend', start + meeting_length)
+                if meeting.end is None:
+                    event.add('dtend', start + meeting_length)
+                else:
+                    event.add('dtend', meeting.end)
                 event.add('dtstamp', now)
                 if meeting.location is not None:
                     event.add('location', unicode(meeting.location))
@@ -37,9 +40,18 @@ def build_calendar(groups, exclude=None):
 
                 events.append(event)
 
-    events = sorted(events, key=lambda x: x['dtstart'].dt)
+    events = sorted(events, cmp=_cmp_dates)
 
     for event in events:
         cal.add_component(event)
 
     return cal.to_ical()
+
+
+def _cmp_dates(d1, d2):
+    if isinstance(d1, datetime):
+        d1 = datetime.combine(d1, time())
+    if isinstance(d2, datetime):
+        d2 = datetime.combine(d2, time())
+
+    return cmp(d1, d2)

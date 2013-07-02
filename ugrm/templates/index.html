@@ -41,7 +41,7 @@
                     <a href="{{ url_for('calendar', _external=True) }}">{{ url_for('calendar', _external=True) }}</a></div></li>
 
             <li><div>Feed for a single usergroup:<br>
-                    {{ url_for('calendar_for_tag', tag='tag', _external=True) }}</div></li>
+                    {{ url_for('calendar_for_tag', tag='pyugrm', _external=True) }}</div></li>
 
             <li><div>Feed for multiple usergroups:<br>
                     {{ url_for('calendar', _external=True) +  '?only=pyugrm,cccmz' }}</div></li>

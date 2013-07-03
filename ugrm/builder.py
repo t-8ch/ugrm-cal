@@ -35,11 +35,11 @@ def build_calendar(groups, exclude=None):
                 else:
                     event.add('dtend', meeting.end)
                 event.add('dtstamp', now)
-                if meeting.location is not None:
+                if meeting.location:
                     event.add('location', unicode(meeting.location))
-                if meeting.url is not None:
+                if meeting.url:
                     event.add('url', meeting.url)
-                if meeting.description is not None:
+                if meeting.description:
                     event.add('description', meeting.description)
                 event['uid'] = sha1(name.encode('utf-8')).hexdigest()
 

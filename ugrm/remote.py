@@ -35,8 +35,8 @@ class RemoteCalendarFetcher(object):
         logger.info('Fetching "{}"'.format(self.url))
         resp = None
         try:
-            resp = session.get(self.url)
-        except requests.RequestError as e:
+            resp = session.get(self.url, timeout=3)
+        except requests.RequestException as e:
             logger.error('Failed to fetch "{}": "{}"'.format(self.url, str(e)))
             return []
 

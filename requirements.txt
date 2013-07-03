@@ -3,3 +3,4 @@ icalendar
 requests
 path.py
 gunicorn
+xmpp_logging_handler

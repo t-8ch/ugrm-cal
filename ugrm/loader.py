@@ -25,15 +25,17 @@ class XmlLoader(object):
         root = ET.parse(str(self.datadir / path(tag + '.xml')))
         group_name = root.find('name').text
         group_url = root.find('url').text
-        _defaultmeetinglocation = root.find('defaultmeetinglocation')
-
-        default_location = None
-        if _defaultmeetinglocation is not None:
-            default_location = self._extract_location(_defaultmeetinglocation)
+        _dml = root.find('defaultmeetinglocation')
 
         schedule = None
-
         _schedule = root.find('schedule')
+
+        default_location = None
+        if _dml is not None:
+            use_dml = _schedule.get('usedefaultmeetinglocation', '') == 'true'
+            if use_dml:
+                default_location = self._extract_location(_dml)
+
         if _schedule is not None:
             ical_feed = _schedule.find('ical')
             if ical_feed is not None:

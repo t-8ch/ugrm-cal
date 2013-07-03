@@ -8,12 +8,13 @@ meeting_length = timedelta(minutes=MEETING_LENGTH)
 
 def build_calendar(groups, exclude=None):
     exclude = set(exclude or [])
+    included_tags = sorted(list(set(map(lambda x: x.tag, groups)) - exclude))
 
     cal = Calendar()
     cal.add('prodid', PRODID)
     cal.add('version', '2.0')
     cal.add('x-wr-calname', CAL_NAME)
-    desc = CAL_DESC + ' (' + ', '.join(map(lambda x: x.tag, groups)) + ')'
+    desc = '{} ({})'.format(CAL_DESC, ', '.join(included_tags))
     cal.add('x-wr-caldesc', desc)
 
     events = []

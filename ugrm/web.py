@@ -4,25 +4,9 @@ from flask import (Flask, abort, Response, redirect, request, render_template,
 from config import DATADIR
 from loader import XmlLoader
 from builder import build_calendar
-from os import environ
-from xmpp_logging_handler import XMPPHandler
 import logging
 
 logging.basicConfig(level=logging.DEBUG)
-logger = logging.getLogger()
-
-XMPP_LOG_USER = environ.get('XMPP_LOG_USER', None)
-XMPP_LOG_PASSWORD = environ.get('XMPP_LOG_PASSWORD', None)
-XMPP_LOG_RECIPIENTS = environ.get('XMPP_LOG_RECIPIENTS', None)
-XMPP_LOG_PORT = environ.get('XMPP_LOG_PORT', 5222)
-
-if XMPP_LOG_USER and XMPP_LOG_PASSWORD and XMPP_LOG_RECIPIENTS:
-
-    xmpp_handler = myHandler = XMPPHandler(XMPP_LOG_USER, XMPP_LOG_PASSWORD,
-                                           XMPP_LOG_RECIPIENTS.split(','),
-                                           port=XMPP_LOG_PORT)
-    xmpp_handler.setLevel(logging.WARN)
-    logger.addHandler(xmpp_handler)
 
 app = Flask('ugrm')
 

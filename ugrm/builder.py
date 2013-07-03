@@ -41,7 +41,8 @@ def build_calendar(groups, exclude=None):
                     event.add('url', meeting.url)
                 if meeting.description:
                     event.add('description', meeting.description)
-                event['uid'] = sha1(name.encode('utf-8')).hexdigest()
+                event['uid'] = sha1(name.encode('utf-8') +
+                                    str(start)).hexdigest()
 
                 events.append(event)
 

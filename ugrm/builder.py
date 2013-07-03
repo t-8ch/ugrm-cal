@@ -2,6 +2,7 @@ from icalendar import Calendar, Event
 from config import PRODID, MEETING_LENGTH, CAL_NAME, CAL_DESC
 from datetime import datetime, timedelta, time
 from hashlib import sha1
+from pytz import utc
 
 meeting_length = timedelta(minutes=MEETING_LENGTH)
 
@@ -53,9 +54,18 @@ def build_calendar(groups, exclude=None):
 
 
 def _cmp_dates(d1, d2):
-    if isinstance(d1, datetime):
+    d1 = d1['dtstart'].dt
+    d2 = d2['dtstart'].dt
+
+    if not isinstance(d1, datetime):
         d1 = datetime.combine(d1, time())
-    if isinstance(d2, datetime):
+    if not isinstance(d2, datetime):
         d2 = datetime.combine(d2, time())
+
+    if d1.tzinfo is None:
+        d1 = d1.replace(tzinfo=utc)
+
+    if d2.tzinfo is None:
+        d2 = d2.replace(tzinfo=utc)
 
     return cmp(d1, d2)

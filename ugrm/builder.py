@@ -28,7 +28,7 @@ def build_calendar(groups, exclude=None):
                 name = meeting.name
                 start = meeting.time
                 event = Event()
-                event.add('summary', name)
+                event.add('summary', group.name + ': ' + name)
                 event.add('dtstart', start)
                 if meeting.end is None:
                     event.add('dtend', start + meeting_length)

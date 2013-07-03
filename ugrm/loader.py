@@ -44,7 +44,7 @@ class XmlLoader(object):
                 meetings = []
                 for meeting in _schedule.findall('meeting'):
                     time = parsedate(meeting.find('time').text).astimezone(utc)
-                    name = group_name + ': ' + meeting.find('name').text
+                    name = meeting.find('name').text
 
                     description = None
                     _description = meeting.find('description')

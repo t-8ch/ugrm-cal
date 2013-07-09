@@ -67,7 +67,7 @@ def calendar():
     return build_calendar_response(all_groups, exclude=exclude)
 
 
-@app.route('/calendar/by_tag')
+@app.route('/calendar/tag')
 def calendar_by_tag():
     only = request.args.get('only', None)
     if only is not None:

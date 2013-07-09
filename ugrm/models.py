@@ -6,12 +6,13 @@ __all__ = ['UserGroup', 'Meeting', 'Location', 'IcalSchedule',
 
 class UserGroup(object):
     def __init__(self, slug, name, schedule=None, url=None,
-                 default_location=None):
+                 default_location=None, tags=[]):
         self.slug = slug
         self.name = name
         self.schedule = schedule
         self.url = url
         self.default_location = default_location
+        self.tags = tags
 
     def __repr__(self):
         return '<UserGroup: {} ({})'.format(self.name, self.slug)

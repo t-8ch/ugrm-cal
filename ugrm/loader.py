@@ -36,6 +36,11 @@ class XmlLoader(object):
             if use_dml:
                 default_location = self._extract_location(_dml)
 
+        tags = []
+        _tags = root.find('tags')
+        for _tag in _tags.findall('tag'):
+            tags.append(_tag.text.lower())
+
         if _schedule is not None:
             ical_feed = _schedule.find('ical')
             if ical_feed is not None:
@@ -66,7 +71,8 @@ class XmlLoader(object):
                 schedule = StaticSchedule(meetings)
 
         return UserGroup(slug=slug, name=group_name, schedule=schedule,
-                         url=group_url, default_location=default_location)
+                         url=group_url, default_location=default_location,
+                         tags=tags)
 
     @staticmethod
     def _extract_location(root):

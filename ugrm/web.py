@@ -65,3 +65,20 @@ def calendar():
     exclude = request.args.get('exclude', '').split(',')
 
     return build_calendar_response(all_groups, exclude=exclude)
+
+
+@app.route('/calendar/by_tags')
+def calendar_by_tags():
+    only = request.args.get('only', None)
+    if only is not None:
+        tags = set(only.split(','))
+        selected_groups = []
+
+        for group in all_groups:
+            for group_tag in group.tags:
+                if group_tag.lower() in tags:
+                    selected_groups.append(group)
+
+        return build_calendar_response(selected_groups)
+
+    return build_calendar_response(all_groups)

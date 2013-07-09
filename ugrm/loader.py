@@ -21,8 +21,8 @@ class XmlLoader(object):
         for f in self.datadir.glob('*.xml'):
             yield str(f.basename().stripext())
 
-    def load_group(self, tag):
-        root = ET.parse(str(self.datadir / path(tag + '.xml')))
+    def load_group(self, slug):
+        root = ET.parse(str(self.datadir / path(slug + '.xml')))
         group_name = root.find('name').text
         group_url = root.find('url').text
         _dml = root.find('defaultmeetinglocation')
@@ -65,7 +65,7 @@ class XmlLoader(object):
 
                 schedule = StaticSchedule(meetings)
 
-        return UserGroup(tag=tag, name=group_name, schedule=schedule,
+        return UserGroup(slug=slug, name=group_name, schedule=schedule,
                          url=group_url, default_location=default_location)
 
     @staticmethod

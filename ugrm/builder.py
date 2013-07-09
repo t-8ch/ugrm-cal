@@ -9,13 +9,13 @@ meeting_length = timedelta(minutes=MEETING_LENGTH)
 
 def build_calendar(groups, exclude=None):
     exclude = set(exclude or [])
-    included_tags = sorted(list(set(map(lambda x: x.tag, groups)) - exclude))
+    included_slugs = sorted(list(set(map(lambda x: x.slug, groups)) - exclude))
 
     cal = Calendar()
     cal.add('prodid', PRODID)
     cal.add('version', '2.0')
     cal.add('x-wr-calname', CAL_NAME)
-    desc = '{} ({})'.format(CAL_DESC, ', '.join(included_tags))
+    desc = '{} ({})'.format(CAL_DESC, ', '.join(included_slugs))
     cal.add('x-wr-caldesc', desc)
 
     events = []
@@ -23,7 +23,7 @@ def build_calendar(groups, exclude=None):
     now = datetime.now()
 
     for group in groups:
-        if group.schedule is not None and group.tag not in exclude:
+        if group.schedule is not None and group.slug not in exclude:
             for meeting in group.schedule:
                 name = meeting.name
                 start = meeting.time

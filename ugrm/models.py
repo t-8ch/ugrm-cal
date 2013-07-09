@@ -5,16 +5,16 @@ __all__ = ['UserGroup', 'Meeting', 'Location', 'IcalSchedule',
 
 
 class UserGroup(object):
-    def __init__(self, tag, name, schedule=None, url=None,
+    def __init__(self, slug, name, schedule=None, url=None,
                  default_location=None):
-        self.tag = tag
+        self.slug = slug
         self.name = name
         self.schedule = schedule
         self.url = url
         self.default_location = default_location
 
     def __repr__(self):
-        return '<UserGroup: {} ({})'.format(self.name, self.tag)
+        return '<UserGroup: {} ({})'.format(self.name, self.slug)
 
     def __str__(self):
         return self.__repr__()

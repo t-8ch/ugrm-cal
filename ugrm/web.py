@@ -11,14 +11,14 @@ logging.basicConfig(level=logging.DEBUG)
 app = Flask('ugrm')
 
 loader = XmlLoader(DATADIR)
-all_tags = list(loader.list_groups())
-all_tags = sorted(all_tags)
+all_slugs = list(loader.list_groups())
+all_slugs = sorted(all_slugs)
 all_groups = list(loader.load_all())
-all_groups = sorted(all_groups, key=lambda x: x.tag)
+all_groups = sorted(all_groups, key=lambda x: x.slug)
 all_groups_map = {}
 
 for group in all_groups:
-    all_groups_map[group.tag] = group
+    all_groups_map[group.slug] = group
 
 
 def build_calendar_response(groups, exclude=None):
@@ -32,9 +32,9 @@ def index():
                            calendar_url=url_for('calendar'))
 
 
-@app.route('/calendar/<tag>')
-def calendar_for_tag(tag):
-    group = all_groups_map.get(tag, None)
+@app.route('/calendar/<slug>')
+def calendar_for_slug(slug):
+    group = all_groups_map.get(slug, None)
 
     if group is None or group.schedule is None:
         return abort(404)
@@ -50,11 +50,11 @@ def calendar_for_tag(tag):
 def calendar():
     only = request.args.get('only', None)
     if only is not None:
-        tags = only.split(',')
+        slugs = only.split(',')
 
         groups = []
-        for tag in tags:
-            group = all_groups_map.get(tag, None)
+        for slug in slugs:
+            group = all_groups_map.get(slug, None)
             if group is None or group.schedule is None:
                 # TODO better error reporting
                 return abort(404)

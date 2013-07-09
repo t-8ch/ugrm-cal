@@ -48,6 +48,9 @@
 
             <li><div>Feed for all <i>except</i> some usergroups:<br>
                     {{ url_for('calendar', _external=True) + '?except=pyugrm,cccffm' }}</div></li>
+
+            <li><div>Feed for usergroups matching one of several tags:<br>
+                    {{ url_for('calendar_by_tag', _external=True) + '?only=agile,linux' }}</div></li>
         </ol>
 
         <h3>Possible slugs</h3>

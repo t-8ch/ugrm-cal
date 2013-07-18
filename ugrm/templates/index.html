@@ -38,19 +38,19 @@
         <h2>Ways to use this</h2>
         <ol>
             <li><div>Feed for all events:<br>
-                    <a href="{{ url_for('calendar', _external=True) }}">{{ url_for('calendar', _external=True) }}</a></div></li>
+                    <pre><a href="{{ url_for('calendar', _external=True) }}">{{ url_for('calendar', _external=True) }}</pre></a></div></li>
 
             <li><div>Feed for a single usergroup:<br>
-                    {{ url_for('calendar_for_slug', slug='pyugrm', _external=True) }}</div></li>
+                    <pre>{{ url_for('calendar_for_slug', slug='pyugrm', _external=True) }}</pre></div></li>
 
             <li><div>Feed for multiple usergroups:<br>
-                    {{ url_for('calendar', _external=True) + '?only=pyugrm,cccffm' }}</div></li>
+                    <pre>{{ url_for('calendar', _external=True) + '?only=pyugrm,cccffm' }}</pre></div></li>
 
             <li><div>Feed for all <i>except</i> some usergroups:<br>
-                    {{ url_for('calendar', _external=True) + '?except=pyugrm,cccffm' }}</div></li>
+                    <pre>{{ url_for('calendar', _external=True) + '?except=pyugrm,cccffm' }}</pre></div></li>
 
             <li><div>Feed for usergroups matching one of several tags:<br>
-                    {{ url_for('calendar_by_tag', _external=True) + '?only=agile,linux' }}</div></li>
+                    <pre>{{ url_for('calendar_by_tag', _external=True) + '?only=agile,linux' }}</pre></div></li>
         </ol>
 
         <h3>Possible slugs</h3>

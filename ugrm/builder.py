@@ -1,5 +1,6 @@
-from icalendar import Calendar, Event
-from config import PRODID, MEETING_LENGTH, CAL_NAME, CAL_DESC
+from icalendar import Calendar, Event, vDDDTypes
+from config import (PRODID, MEETING_LENGTH, CAL_NAME, CAL_DESC,
+                    REMOTE_SYNC_INTERVAL)
 from datetime import datetime, timedelta, time
 from hashlib import sha1
 from pytz import utc
@@ -17,6 +18,10 @@ def build_calendar(groups, exclude=None):
     cal.add('x-wr-calname', CAL_NAME)
     desc = '{} ({})'.format(CAL_DESC, ', '.join(included_slugs))
     cal.add('x-wr-caldesc', desc)
+    # https://tools.ietf.org/html/draft-daboo-icalendar-extensions-05#section-5.6
+    refresh = vDDDTypes(timedelta(minutes=REMOTE_SYNC_INTERVAL)).to_ical()
+    cal.add('refresh-interval;value=duration', refresh)
+    cal.add('x-published-ttl', refresh)
 
     events = []
 

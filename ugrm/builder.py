@@ -19,7 +19,7 @@ def build_calendar(groups, exclude=None):
     desc = '{} ({})'.format(CAL_DESC, ', '.join(included_slugs))
     cal.add('x-wr-caldesc', desc)
     # https://tools.ietf.org/html/draft-daboo-icalendar-extensions-05#section-5.6
-    refresh = vDDDTypes(timedelta(minutes=REMOTE_SYNC_INTERVAL)).to_ical()
+    refresh = vDDDTypes(timedelta(minutes=REMOTE_SYNC_INTERVAL))
     cal.add('refresh-interval;value=duration', refresh)
     cal.add('x-published-ttl', refresh)
 

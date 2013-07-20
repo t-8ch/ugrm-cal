@@ -1,4 +1,5 @@
-from icalendar import Calendar, Event, vDDDTypes
+from icalendar import (Calendar, Event, vDDDTypes, Timezone,
+                       TimezoneDaylight, TimezoneStandard)
 from config import (PRODID, MEETING_LENGTH, CAL_NAME, CAL_DESC,
                     REMOTE_SYNC_INTERVAL)
 from datetime import datetime, timedelta, time
@@ -6,6 +7,27 @@ from hashlib import sha1
 from pytz import utc
 
 meeting_length = timedelta(minutes=MEETING_LENGTH)
+
+tz = Timezone()
+tz.add('tzid', 'Europe/Berlin')
+tz.add('x-lic-location', 'Europe/Berlin')
+
+_tzs = TimezoneStandard()
+_tzs.add('tzname', 'CET')
+_tzs.add('dtstart', datetime(1970, 10, 25, 3, 0, 0))
+_tzs.add('rrule', {'freq': 'yearly', 'bymonth': 10, 'byday': '-1su'})
+_tzs.add('TZOFFSETFROM', timedelta(hours=2))
+_tzs.add('TZOFFSETTO', timedelta(hours=1))
+
+_tzd = TimezoneDaylight()
+_tzd.add('tzname', 'CEST')
+_tzd.add('dtstart', datetime(1970, 3, 29, 2, 0, 0))
+_tzd.add('rrule', {'freq': 'yearly', 'bymonth': 3, 'byday': '-1su'})
+_tzd.add('TZOFFSETFROM', timedelta(hours=1))
+_tzd.add('TZOFFSETTO', timedelta(hours=2))
+
+tz.add_component(_tzs)
+tz.add_component(_tzd)
 
 
 def build_calendar(groups, exclude=None):
@@ -22,6 +44,8 @@ def build_calendar(groups, exclude=None):
     refresh = vDDDTypes(timedelta(minutes=REMOTE_SYNC_INTERVAL))
     cal.add('refresh-interval;value=duration', refresh)
     cal.add('x-published-ttl', refresh)
+
+    cal.add_component(tz)
 
     events = []
 
@@ -46,6 +70,8 @@ def build_calendar(groups, exclude=None):
                     event.add('url', meeting.url)
                 if meeting.description:
                     event.add('description', meeting.description)
+                if meeting.repeat:
+                    event.add('rrule', meeting.repeat)
                 event['uid'] = sha1(name.encode('utf-8') +
                                     str(start)).hexdigest()
 

@@ -46,18 +46,16 @@ class RemoteCalendarFetcher(object):
         for c in rcal.walk():
             if c.name == 'VEVENT':
 
-                # don't support recurring for now, timezone issues
-                if c.get('rrule'):
-                    continue
-
                 name = unicode(c.get('summary'))
                 description = c.get('description', None)
                 if description is not None:
                     description = unicode(description)
 
+                repeat = c.get('rrule', None)
+
                 start = None
                 _start = c.get('dtstart').dt
-                if isinstance(_start, datetime.date):
+                if isinstance(_start, datetime.date) or repeat:
                     start = _start
                 else:
                     start = _start.astimezone(utc)
@@ -66,9 +64,9 @@ class RemoteCalendarFetcher(object):
                 _end = c.get('dtend', None)
                 if _end is not None:
                     _end = _end.dt
-                    if isinstance(_end, datetime.date):
+                    if isinstance(_end, datetime.date) or repeat:
                         end = _end
-                    else:
+                    elif not repeat:
                         end = _end.astimezone(utc)
                 else:
                     _duration = c.get('duration', None)
@@ -82,7 +80,7 @@ class RemoteCalendarFetcher(object):
 
                 meetings.append(Meeting(name=name, time=start,
                                 description=description, end=end,
-                                location=location))
+                                location=location, repeat=repeat))
 
         self.data = meetings
         self.last_synced = now

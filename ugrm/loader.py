@@ -57,9 +57,9 @@ class XmlLoader(object):
                         description = self._normalize_description(
                             _description.text)
 
-                    url = None
+                    url = group_url
                     _url = meeting.find('url')
-                    if url is not None:
+                    if _url is not None:
                         url = _url.text
 
                     location = self._extract_location(meeting.find('location'))

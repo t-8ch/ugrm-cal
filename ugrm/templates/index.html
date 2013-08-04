@@ -45,7 +45,7 @@
         <h2>Ways to use this</h2>
         <ol>
             <li><div>Feed for all events:<br>
-                    <pre><a href="{{ url_for('calendar', _external=True) }}">{{ url_for('calendar', _external=True) }}</pre></a></div></li>
+                    <pre><a href="{{ url_for('calendar', _external=True) }}">{{ url_for('calendar', _external=True) }}</a></pre></div></li>
 
             <li><div>Feed for a single usergroup:<br>
                     <pre>{{ url_for('calendar_for_slug', slug='pyugrm', _external=True) }}</pre></div></li>
@@ -68,8 +68,7 @@
                 <dt>
                     <i>{{ group.slug }}</i>:
                     {% if group.thumbnail %}
-                    <img class="thumbnail" src="{{ url_for('thumbnail', thumbnail=group.thumbnail,
-                    _external=True) }}" />
+                    <img class="thumbnail" src="{{ url_for('thumbnail', thumbnail=group.thumbnail, _external=True) }}" alt="Logo of {{ group.name.strip() }} "/>
                     {% endif %}
                 </dt>
                     <dd>{{ group.name.strip() }}

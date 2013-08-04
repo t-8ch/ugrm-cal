@@ -21,13 +21,17 @@
             text-align: left;
         }
         dt {
-            padding-top: 1ex;
+            padding-top: 2ex;
         }
         li {
             padding-top: 2ex;
         }
         h2,h3 {
             padding-top: 3ex;
+        }
+        .thumbnail {
+            height: 2ex;
+            float: right;
         }
     </style>
 </head>
@@ -57,7 +61,14 @@
         <div id="all_groups">
             <dl>
                 {% for group in groups %}
-                <dt><i>{{ group.slug }}</i>:</dt><dd>{{ group.name.strip() }}</dd>
+                <dt>
+                    <i>{{ group.slug }}</i>:
+                    {% if group.thumbnail %}
+                    <img class="thumbnail" src="{{ url_for('thumbnail', thumbnail=group.thumbnail,
+                    _external=True) }}" />
+                    {% endif %}
+                </dt>
+                    <dd>{{ group.name.strip() }}</dd>
                 {% endfor %}
             </dl>
         </div>

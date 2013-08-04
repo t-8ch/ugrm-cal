@@ -70,9 +70,11 @@ class XmlLoader(object):
 
                 schedule = StaticSchedule(meetings)
 
+        thumbnail = self._get_thumbnail(slug)
+
         return UserGroup(slug=slug, name=group_name, schedule=schedule,
                          url=group_url, default_location=default_location,
-                         tags=tags)
+                         tags=tags, thumbnail=thumbnail)
 
     @staticmethod
     def _extract_location(root):
@@ -94,6 +96,13 @@ class XmlLoader(object):
     @staticmethod
     def _normalize_description(desc):
         return ' '.join(desc.split())
+
+    def _get_thumbnail(self, slug):
+        extensions = ['png', 'jpg']
+        for e in extensions:
+            p = self.datadir.joinpath(slug + '.logo.' + e)
+            if p.isfile():
+                return p.basename()
 
     def load_all(self):
         for group in self.list_groups():

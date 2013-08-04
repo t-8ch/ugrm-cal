@@ -1,18 +1,19 @@
 from remote import RemoteCalendarFetcher
 
-__all__ = ['UserGroup', 'Meeting', 'Location', 'IcalSchedule',
+__all__ = ['UserGroup', 'Location', 'IcalSchedule',
            'StaticSchedule']
 
 
 class UserGroup(object):
     def __init__(self, slug, name, schedule=None, url=None,
-                 default_location=None, tags=[]):
+                 default_location=None, tags=[], thumbnail=None):
         self.slug = slug
         self.name = name
         self.schedule = schedule
         self.url = url
         self.default_location = default_location
         self.tags = tags
+        self.thumbnail = thumbnail
 
     def __repr__(self):
         return '<UserGroup: {} ({})'.format(self.name, self.slug)

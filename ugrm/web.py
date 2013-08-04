@@ -1,5 +1,5 @@
 from flask import (Flask, abort, Response, redirect, request, render_template,
-                   url_for)
+                   url_for, send_from_directory)
 
 from config import DATADIR
 from loader import XmlLoader
@@ -82,3 +82,11 @@ def calendar_by_tag():
         return build_calendar_response(selected_groups)
 
     return build_calendar_response(all_groups)
+
+
+@app.route('/thumbnail/<thumbnail>')
+def thumbnail(thumbnail):
+    parts = thumbnail.split('.')
+    if not parts or parts[-1] not in ['png', 'jpg']:
+        abort(404)
+    return send_from_directory(DATADIR, thumbnail)

@@ -33,6 +33,9 @@
             height: 2ex;
             float: right;
         }
+        .tags {
+            font-size: 80%;
+        }
     </style>
 </head>
 <body>
@@ -57,7 +60,8 @@
                     <pre>{{ url_for('calendar_by_tag', _external=True) + '?only=agile,linux' }}</pre></div></li>
         </ol>
 
-        <h3>Possible slugs</h3>
+        <h2>Possible slugs</h2>
+        <span class="tags">(Tags in parenthesis)</span>
         <div id="all_groups">
             <dl>
                 {% for group in groups %}
@@ -68,7 +72,10 @@
                     _external=True) }}" />
                     {% endif %}
                 </dt>
-                    <dd>{{ group.name.strip() }}</dd>
+                    <dd>{{ group.name.strip() }}
+                      <br>
+                      <div class="tags">({{ ', '.join(group.tags) }})</div>
+                    </dd>
                 {% endfor %}
             </dl>
         </div>

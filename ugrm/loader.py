@@ -24,7 +24,7 @@ class XmlLoader(object):
     def load_group(self, slug):
         root = ET.parse(str(self.datadir / path(slug + '.xml')))
         group_name = root.find('name').text
-        group_url = root.find('url').text
+        group_url = root.find('url').text.strip()
         _dml = root.find('defaultmeetinglocation')
 
         schedule = None
@@ -60,7 +60,7 @@ class XmlLoader(object):
                     url = group_url
                     _url = meeting.find('url')
                     if _url is not None:
-                        url = _url.text
+                        url = _url.text.strip()
 
                     location = self._extract_location(meeting.find('location'))
                     location = location or default_location

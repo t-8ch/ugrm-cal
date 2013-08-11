@@ -67,14 +67,16 @@
             <dl>
                 {% for group in groups %}
                 <dt>
-                    <i>{{ group.slug }}</i>:
+                    <i>{{ group.slug }}</i>
                     {% if group.thumbnail %}
                     <img class="thumbnail" src="{{ url_for('thumbnail', thumbnail=group.thumbnail, _external=True) }}" alt="Logo of {{ group.name.strip() }} "/>
                     {% endif %}
                 </dt>
                     <dd>{{ group.name.strip() }}
                       <br>
+                      {% if group.tags %}
                       <div class="tags">({{ ', '.join(group.tags) }})</div>
+                      {% endif %}
                     </dd>
                 {% endfor %}
             </dl>

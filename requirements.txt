@@ -3,4 +3,4 @@ icalendar
 requests
 path.py
 gunicorn
-pytz>=2013d
+pytz>=2013b

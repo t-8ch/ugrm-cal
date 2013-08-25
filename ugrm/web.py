@@ -1,7 +1,7 @@
 from flask import (Flask, abort, Response, redirect, request, render_template,
                    url_for, send_from_directory)
 
-from config import DATADIR
+from config import DATADIR, APP_VERSION, DATA_VERSION
 from loader import XmlLoader
 from builder import build_calendar
 import logging
@@ -29,7 +29,9 @@ def build_calendar_response(groups, exclude=None):
 @app.route('/')
 def index():
     return render_template('index.html', groups=all_groups,
-                           calendar_url=url_for('calendar'))
+                           calendar_url=url_for('calendar'),
+                           data_version=DATA_VERSION,
+                           app_version=APP_VERSION)
 
 
 @app.route('/calendar/<slug>')

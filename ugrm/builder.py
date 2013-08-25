@@ -68,8 +68,7 @@ def build_calendar(groups, exclude=None):
                     event.add('location', unicode(meeting.location))
                     coords = meeting.location.coordinates
                     if coords:
-                        event.add('geo', '%f;%f' % (
-                            coords['lat'], coords['lon']))
+                        event.add('geo', (coords['lat'], coords['lon']))
                 if meeting.url:
                     event.add('url', meeting.url)
                 if meeting.description:

@@ -21,7 +21,7 @@ class Nomatim(object):
         if location.coordinates:
             return
 
-        if not location.zipcode and location.city:
+        if not location.zipcode or not location.city or location.city == 'TBA':
             return
 
         params = {
@@ -30,6 +30,8 @@ class Nomatim(object):
         }
 
         if location.street:
+            if location.street == 'TBA':
+                return
             params['street'] = location.street
 
         res = self.session.get(self.api_url, params=params)

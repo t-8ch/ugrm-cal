@@ -23,12 +23,14 @@ class UserGroup(object):
 
 
 class Location(object):
-    def __init__(self, name, street, zipcode, city, url=None):
+    def __init__(self, name, street, zipcode, city, url=None,
+                 coordinates=None):
         self.name = name
         self.street = street
         self.zipcode = zipcode
         self.city = city
         self.url = url
+        self.coordinates = coordinates
 
     def __repr__(self):
         if self.url is None:

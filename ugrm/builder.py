@@ -66,7 +66,7 @@ def build_calendar(groups, exclude=None):
                 event.add('dtstamp', now)
                 if meeting.location:
                     event.add('location', unicode(meeting.location))
-                    if hasattr('coordinates', meeting.location):
+                    if hasattr(meeting.location, 'coordinates'):
                         coords = meeting.location.coordinates
                         if coords:
                             event.add('geo', (coords['lat'], coords['lon']))

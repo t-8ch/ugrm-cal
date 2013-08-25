@@ -1,5 +1,4 @@
 from path import path
-from os import environ
 
 DATADIR = str(path(__file__).dirname().parent / path('data') / path('usergroup'))
 
@@ -11,6 +10,3 @@ REMOTE_SYNC_INTERVAL = 60  # in minutes
 DEFAULT_TIMEZONE = 'Europe/Berlin'
 CAL_NAME = 'Usergroups RheinMain'
 CAL_DESC = 'http://usergroups.rhainmainrocks.de'
-
-APP_VERSION = environ.get('APP_VERSION', 'unknown')
-DATA_VERSION = environ.get('DATA_VERSION', 'unknown')

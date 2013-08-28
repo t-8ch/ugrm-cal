@@ -4,3 +4,4 @@ requests
 path.py
 gunicorn
 pytz>=2013b
+raven[flask]

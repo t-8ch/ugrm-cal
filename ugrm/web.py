@@ -1,7 +1,8 @@
 from flask import (Flask, abort, Response, redirect, request, render_template,
                    url_for, send_from_directory)
+from raven.contrib.flask import Sentry
 
-from config import DATADIR
+from config import DATADIR, SENTRY_DSN
 from loader import XmlLoader
 from builder import build_calendar
 import logging
@@ -9,6 +10,8 @@ import logging
 logging.basicConfig(level=logging.DEBUG)
 
 app = Flask('ugrm')
+if SENTRY_DSN:
+    sentry = Sentry(app, dsn=SENTRY_DSN)
 
 loader = XmlLoader(DATADIR)
 all_slugs = list(loader.list_groups())

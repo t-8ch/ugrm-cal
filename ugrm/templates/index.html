@@ -67,7 +67,7 @@
             <dl>
                 {% for group in groups %}
                 <dt>
-                    <i>{{ group.slug }}</i>
+                    <a href="{{ ugrm_url + '/~' + group.slug}}"><i>{{ group.slug }}</i></a>
                     {% if group.thumbnail %}
                     <img class="thumbnail" src="{{ url_for('thumbnail', thumbnail=group.thumbnail, _external=True) }}" alt="Logo of {{ group.name.strip() }} "/>
                     {% endif %}

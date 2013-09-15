@@ -12,4 +12,6 @@ DEFAULT_TIMEZONE = 'Europe/Berlin'
 CAL_NAME = 'Usergroups RheinMain'
 CAL_DESC = 'http://usergroups.rhainmainrocks.de'
 
+UGRM_URL = 'http://usergroups.rheinmainrocks.de'
+
 SENTRY_DSN = environ.get('SENTRY_DSN')

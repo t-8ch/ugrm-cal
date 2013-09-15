@@ -2,7 +2,7 @@ from flask import (Flask, abort, Response, redirect, request, render_template,
                    url_for, send_from_directory)
 from raven.contrib.flask import Sentry
 
-from config import DATADIR, SENTRY_DSN
+from config import DATADIR, SENTRY_DSN, UGRM_URL
 from loader import XmlLoader
 from builder import build_calendar
 import logging
@@ -32,6 +32,7 @@ def build_calendar_response(groups, exclude=None):
 @app.route('/')
 def index():
     return render_template('index.html', groups=all_groups,
+                           ugrm_url=UGRM_URL,
                            calendar_url=url_for('calendar'))
 
 

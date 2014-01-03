@@ -10,7 +10,7 @@ MEETING_LENGTH = 180  # in minutes
 REMOTE_SYNC_INTERVAL = 60  # in minutes
 DEFAULT_TIMEZONE = 'Europe/Berlin'
 CAL_NAME = 'Usergroups RheinMain'
-CAL_DESC = 'http://usergroups.rhainmainrocks.de'
+CAL_DESC = 'http://usergroups.rheinmainrocks.de'
 
 UGRM_URL = 'http://usergroups.rheinmainrocks.de'
 

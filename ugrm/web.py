@@ -3,7 +3,7 @@ from flask import (Flask, abort, Response, redirect, request, render_template,
 from raven.contrib.flask import Sentry
 
 from config import DATADIR, SENTRY_DSN, UGRM_URL
-from loader import XmlLoader
+from loader import LocalDirectoryLoader
 from builder import build_calendar
 import logging
 
@@ -13,7 +13,7 @@ app = Flask('ugrm')
 if SENTRY_DSN:
     sentry = Sentry(app, dsn=SENTRY_DSN)
 
-loader = XmlLoader(DATADIR)
+loader = LocalDirectoryLoader(DATADIR)
 all_slugs = list(loader.list_groups())
 all_slugs = sorted(all_slugs)
 all_groups = list(loader.load_all())

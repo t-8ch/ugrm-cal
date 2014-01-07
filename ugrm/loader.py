@@ -7,24 +7,43 @@ from nominatim import Nominatim
 from meeting import Meeting
 from models import UserGroup, Location, IcalSchedule, StaticSchedule
 
-__all__ = ['XmlLoader']
+__all__ = ['LocalDirectoryLoader']
 
 
 class XmlLoader(object):
+    def __init__(self, *args, **kwargs):
+        raise NotImplemented()
 
-    def __init__(self, datadir):
-        self.datadir = path(datadir)
-        self.nominatim = Nominatim()
-        if not self.datadir.isdir():
-            raise ValueError(
-                'Invalid datadir specified "{}"'.format(str(self.datadir)))
+    def _get_thumbnail(self, *args, **kwargs):
+        raise NotImplemented()
 
-    def list_groups(self):
-        for f in self.datadir.glob('*.xml'):
-            yield str(f.basename().stripext())
+    @staticmethod
+    def _extract_location(root):
+        if root is None:
+            return None
+
+        name = root.find('name').text
+        url = None
+        _url = root.find('url')
+        if _url is not None:
+            url = _url.text
+        street = root.find('street').text
+        zipcode = root.find('zip').text
+        city = root.find('city').text
+
+        return Location(name=name, url=url, street=street, zipcode=zipcode,
+                        city=city)
+
+    @staticmethod
+    def _normalize_description(desc):
+        return ' '.join(desc.split())
+
+    def load_all(self):
+        for group in self.list_groups():
+            yield self.load_group(group)
 
     def load_group(self, slug):
-        root = ET.parse(str(self.datadir / path(slug + '.xml')))
+        root = self._load_xml(slug)
         group_name = root.find('name').text
         group_url = root.find('url').text.strip()
         _dml = root.find('defaultmeetinglocation')
@@ -81,26 +100,22 @@ class XmlLoader(object):
                          url=group_url, default_location=default_location,
                          tags=tags, thumbnail=thumbnail)
 
-    @staticmethod
-    def _extract_location(root):
-        if root is None:
-            return None
 
-        name = root.find('name').text
-        url = None
-        _url = root.find('url')
-        if _url is not None:
-            url = _url.text
-        street = root.find('street').text
-        zipcode = root.find('zip').text
-        city = root.find('city').text
+class LocalDirectoryLoader(XmlLoader):
 
-        return Location(name=name, url=url, street=street, zipcode=zipcode,
-                        city=city)
+    def __init__(self, datadir):
+        self.datadir = path(datadir)
+        self.nominatim = Nominatim()
+        if not self.datadir.isdir():
+            raise ValueError(
+                'Invalid datadir specified "{}"'.format(str(self.datadir)))
 
-    @staticmethod
-    def _normalize_description(desc):
-        return ' '.join(desc.split())
+    def _load_xml(self, slug):
+        return ET.parse(str(self.datadir / path(slug + '.xml')))
+
+    def list_groups(self):
+        for f in self.datadir.glob('*.xml'):
+            yield str(f.basename().stripext())
 
     def _get_thumbnail(self, slug):
         extensions = ['png', 'jpg']
@@ -108,10 +123,6 @@ class XmlLoader(object):
             p = self.datadir.joinpath(slug + '.logo.' + e)
             if p.isfile():
                 return p.basename()
-
-    def load_all(self):
-        for group in self.list_groups():
-            yield self.load_group(group)
 
     def __str__(self):
         return '<XmlLoader: {} >'.format(str(self.datadir))

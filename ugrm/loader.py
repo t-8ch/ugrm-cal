@@ -3,7 +3,7 @@ from path import path
 from dateutil.parser import parse as parsedate
 from pytz import utc
 
-from nomatim import Nomatim
+from nominatim import Nominatim
 from meeting import Meeting
 from models import UserGroup, Location, IcalSchedule, StaticSchedule
 
@@ -14,7 +14,7 @@ class XmlLoader(object):
 
     def __init__(self, datadir):
         self.datadir = path(datadir)
-        self.nomatim = Nomatim()
+        self.nominatim = Nominatim()
         if not self.datadir.isdir():
             raise ValueError(
                 'Invalid datadir specified "{}"'.format(str(self.datadir)))
@@ -70,7 +70,7 @@ class XmlLoader(object):
                                 description=description,
                                 url=url, location=location)
 
-                    self.nomatim.resolve_coordinates(m)
+                    self.nominatim.resolve_coordinates(m)
                     meetings.append(m)
 
                 schedule = StaticSchedule(meetings)

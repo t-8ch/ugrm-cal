@@ -3,7 +3,7 @@ import requests
 DEFAULT_API_URL = 'http://nominatim.openstreetmap.org/search'
 
 
-class Nomatim(object):
+class Nominatim(object):
     def __init__(self, api_url=DEFAULT_API_URL):
         self.session = requests.Session()
         self.session.params = {
